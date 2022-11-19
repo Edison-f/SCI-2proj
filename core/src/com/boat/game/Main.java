@@ -20,6 +20,7 @@ public class Main extends ApplicationAdapter {
 	UI ui;
 
 	final int TRASH_COUNT = 10;
+	float cleanliness;
 	
 	@Override
 	public void create () {
@@ -41,10 +42,29 @@ public class Main extends ApplicationAdapter {
 		}
 	}
 
+	private void updateCleanliness() {
+		cleanliness = 0;
+		for (Trash t : trash) {
+			cleanliness += t.getCompletion() / 100.0;
+		}
+		cleanliness /= TRASH_COUNT;
+	}
+
+	private void renderBackground() {
+		// Clean water (0.0f, 0.412f, 0.58f)
+		// Dirty water (0.568f, 0.482f, 0.309f)
+		updateCleanliness();
+		float red = 0.568f * (cleanliness) + 0.0f * (1 - cleanliness) ;
+		float green = 0.482f * (cleanliness) + 0.412f * (1 - cleanliness) ;
+		float blue = 0.309f * (cleanliness) + 0.58f * (1 - cleanliness) ;
+		ScreenUtils.clear(red, green, blue, 1);
+	}
+
 	@Override
 	public void render () {
 		periodic();
-		ScreenUtils.clear(0.0f, 0.412f, 0.58f, 1);
+		renderBackground();
+//		ScreenUtils.clear(0.0f, 0.412f, 0.58f, 1);
 		batch.begin();
 		for (Trash t : trash) {
 			t.render();

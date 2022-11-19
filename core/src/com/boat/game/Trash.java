@@ -31,7 +31,7 @@ public class Trash {
         if(!collected) {
             shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             adjustColor();
-            shapeRenderer.setColor(red, green, blue, 1);
+            shapeRenderer.setColor(red, green, blue, 0.5f);
             shapeRenderer.rect(x, y, width, height);
             shapeRenderer.end();
         }
